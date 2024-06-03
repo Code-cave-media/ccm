@@ -89,6 +89,93 @@
             width: 80%;
             box-shadow: 0 0 15px rgba(0,0,0,0.1);
         }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #333;
+        }
+        #scheduler {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            max-width: 1200px;
+            width: 100%;
+        }
+        .member {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin: 10px;
+            padding: 20px;
+            width: 45%;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        @media (max-width: 768px) {
+            .member {
+                width: 90%;
+            }
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin: 5px 0;
+        }
+        input, select {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+        a.button {
+            display: inline-block;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            margin-right: 5px;
+        }
+        a.button:hover {
+            background-color: #0056b3;
+        }
+        p {
+            margin-top: 10px;
+        }
+        .schedule {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .schedule a.button {
+            background-color: #dc3545;
+            margin-left: 10px;
+        }
+        .common-time {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            width: 80%;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
@@ -119,7 +206,13 @@
             </select>
             <div id="sravanSchedules" class="schedules"></div>
             <p id="sravanStatus">Current Status: Not set</p>
+            <div class="action-buttons" id="sravanActionButtons" style="display: none;">
+                <a target="blank" href="https://chat.whatsapp.com/BmCtXOgd9yhEWljppZ6wmr" class="button">W Group</a>
+                <a target="blank" href="https://wa.me/+918606512660" class="button">W Chat</a>
+                <a target="blank" href="tel:+918606512660" class="button">Call</a>
+            </div>
         </div>
+        
         <div class="member">
             <h2>Sreenand</h2>
             <form id="srinathForm">
@@ -134,9 +227,14 @@
             </select>
             <div id="srinathSchedules" class="schedules"></div>
             <p id="srinathStatus">Current Status: Not set</p>
+            <div class="action-buttons" id="srinathActionButtons" style="display: none;">
+                <a target="blank" href="https://chat.whatsapp.com/BmCtXOgd9yhEWljppZ6wmr" class="button">W Group</a>
+                <a target="blank" href="https://wa.me/+918138040335" class="button">W Chat</a>
+                <a target="blank" href="tel:+918138040335" class="button">Call</a>
+            </div>
         </div>
         <div class="member">
-            <h2>Irshad</h2>
+            <h2>Azwan</h2>
             <form id="aswathForm">
                 <label for="aswathStart">Start Time:</label>
                 <input type="time" id="aswathStart" required>
@@ -149,9 +247,16 @@
             </select>
             <div id="aswathSchedules" class="schedules"></div>
             <p id="aswathStatus">Current Status: Not set</p>
+            <div class="action-buttons" id="aswathActionButtons" style="display: none;">
+                <div class="action-buttons" id="srinathActionButtons" style="display: none;">
+                    <a target="blank" href="https://chat.whatsapp.com/BmCtXOgd9yhEWljppZ6wmr" class="button">W Group</a>
+                    <a target="blank" href="https://wa.me/+918714192703" class="button">W Chat</a>
+                    <a target="blank" href="tel:+918714192703" class="button">Call</a>
+                </div>
+            </div>
         </div>
         <div class="member">
-            <h2>Final member</h2>
+            <h2>Irshad</h2>
             <form id="irshadForm">
                 <label for="irshadStart">Start Time:</label>
                 <input type="time" id="irshadStart" required>
@@ -164,6 +269,11 @@
             </select>
             <div id="irshadSchedules" class="schedules"></div>
             <p id="irshadStatus">Current Status: Not set</p>
+            <div class="action-buttons" id="irshadActionButtons" style="display: none;">
+                <a target="blank" href="https://chat.whatsapp.com/BmCtXOgd9yhEWljppZ6wmr" class="button">W Group</a>
+                <a target="blank" href="https://wa.me/+917025359287" class="button">W Chat</a>
+                <a target="blank" href="tel:+917025359287" class="button">Call</a>
+            </div>
         </div>
     </div>
     <script>
@@ -202,6 +312,18 @@
                 return 'Not Available';
             }
 
+            function updateMemberStatus(member) {
+                const status = document.getElementById(`${member}Status`);
+                const actionButtons = document.getElementById(`${member}ActionButtons`);
+                const currentStatus = checkCurrentStatus(member);
+                status.textContent = `Current Status: ${currentStatus}`;
+                if (currentStatus === 'Available') {
+                    actionButtons.style.display = 'block';
+                } else {
+                    actionButtons.style.display = 'none';
+                }
+            }
+
             members.forEach(member => {
                 const form = document.getElementById(`${member}Form`);
                 const schedulesDiv = document.getElementById(`${member}Schedules`);
@@ -218,12 +340,12 @@
                     schedules.push({ start: startTime, end: endTime });
                     localStorage.setItem(`${member}Schedules`, JSON.stringify(schedules));
                     displaySchedules(member, schedulesDiv, schedules);
-                    status.textContent = `Current Status: ${checkCurrentStatus(member)}`;
+                    updateMemberStatus(member);
                 });
 
                 const storedSchedules = JSON.parse(localStorage.getItem(`${member}Schedules`)) || [];
                 displaySchedules(member, schedulesDiv, storedSchedules);
-                status.textContent = `Current Status: ${checkCurrentStatus(member)}`;
+                updateMemberStatus(member);
 
                 commonTimeSelect.addEventListener('change', () => {
                     if (commonTimeSelect.value) {
@@ -258,7 +380,7 @@
                 schedules.splice(index, 1);
                 localStorage.setItem(`${member}Schedules`, JSON.stringify(schedules));
                 displaySchedules(member, document.getElementById(`${member}Schedules`), schedules);
-                document.getElementById(`${member}Status`).textContent = `Current Status: ${checkCurrentStatus(member)}`;
+                updateMemberStatus(member);
             }
 
             window.deleteSchedule = (member, index) => {
@@ -266,7 +388,7 @@
                 schedules.splice(index, 1);
                 localStorage.setItem(`${member}Schedules`, JSON.stringify(schedules));
                 displaySchedules(member, document.getElementById(`${member}Schedules`), schedules);
-                document.getElementById(`${member}Status`).textContent = `Current Status: ${checkCurrentStatus(member)}`;
+                updateMemberStatus(member);
             }
 
             const commonTimeForm = document.getElementById('commonTimeForm');
@@ -305,8 +427,7 @@
             // Update current status every minute
             setInterval(() => {
                 members.forEach(member => {
-                    const status = document.getElementById(`${member}Status`);
-                    status.textContent = `Current Status: ${checkCurrentStatus(member)}`;
+                    updateMemberStatus(member);
                 });
             }, 60000); // 60000 milliseconds = 1 minute
         });
