@@ -85,8 +85,23 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
 }
+
 #loader {
-    
+
+    animation: forwardBackward 0.5s ease-in-out infinite;
+    transform-origin: center;
+}
+
+@keyframes forwardBackward {
+    0% {
+        transform:  translateX(0);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+    100% {
+        transform:  translateX(0);
+    }
 }
 #loader-container {
     position: fixed;
