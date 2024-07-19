@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Ticket</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>E-Ticket</h1>
+        <div id="ticketDetails">
+            <p><strong>Bus:</strong> <span id="busName"></span></p>
+            <p><strong>Start Point:</strong> <span id="startPoint"></span></p>
+            <p><strong>End Point:</strong> <span id="endPoint"></span></p>
+            <p><strong>Fare:</strong> ₹<span id="fareAmount"></span></p>
+            <p><strong>Payment Time:</strong> <span id="paymentTime"></span></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    const busName = urlParams.get('bus') || 'N/A';
+    const startPoint = urlParams.get('start') || 'N/A';
+    const endPoint = urlParams.get('end') || 'N/A';
+    const fareAmount = urlParams.get('fare') || '0';
+    const paymentTime = urlParams.get('time') || new Date().toLocaleString();
+
+    document.getElementById('busName').innerText = busName;
+    document.getElementById('startPoint').innerText = startPoint;
+    document.getElementById('endPoint').innerText = endPoint;
+    document.getElementById('fareAmount').innerText = fareAmount;
+    document.getElementById('paymentTime').innerText = new Date(paymentTime).toLocaleString();
+});
+
+    </script>
+</body>
+</html>
