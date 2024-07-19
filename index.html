@@ -49,7 +49,7 @@
         </div>
 
     <script>
-        const fares = {
+       const fares = {
     "Sreekandapuram-Parippayi": 10,
     "Sreekandapuram-Neduvaloor": 15,
     "Parippayi-Neduvaloor": 5,
@@ -71,21 +71,22 @@ function updateFare() {
         const route = `${startPoint}-${endPoint}`;
         const fare = fares[route] || 0;
         document.getElementById('fare').innerText = `Fare: ₹${fare}`;
-        updatePaymentLink(busSelection, fare);
+        updatePaymentLink(busSelection, fare, startPoint, endPoint);
     } else {
         document.getElementById('fare').innerText = 'Fare: ₹0';
         document.getElementById('payButton').style.display = 'none'; // Hide button if no valid fare
     }
 }
 
-function updatePaymentLink(busSelection, fare) {
+function updatePaymentLink(busSelection, fare, startPoint, endPoint) {
     const payButton = document.getElementById('payButton');
     let paymentUrl = '';
+    const currentTime = new Date().toISOString();
 
     if (busSelection === 'Muthappan') {
-        paymentUrl = `upi://pay?pa=shravannarayan48@okicici&pn=Shravan Narayan&am=${fare}&cu=INR`;
+        paymentUrl = `upi://pay?pa=shravannarayan48@okicici&pn=Shravan Narayan&am=${fare}&cu=INR&url=https://yourwebsite.com/ticket?bus=${encodeURIComponent(busSelection)}&fare=${encodeURIComponent(fare)}&start=${encodeURIComponent(startPoint)}&end=${encodeURIComponent(endPoint)}&time=${encodeURIComponent(currentTime)}`;
     } else if (busSelection === 'St. Jude') {
-        paymentUrl = `upi://pay?pa=shravannarayan702-1@okhdfcbank&pn=Shravan Narayan&am=${fare}&cu=INR`;
+        paymentUrl = `upi://pay?pa=shravannarayan702-1@okhdfcbank&pn=Shravan Narayan&am=${fare}&cu=INR&url=https://yourwebsite.com/ticket?bus=${encodeURIComponent(busSelection)}&fare=${encodeURIComponent(fare)}&start=${encodeURIComponent(startPoint)}&end=${encodeURIComponent(endPoint)}&time=${encodeURIComponent(currentTime)}`;
     }
 
     if (paymentUrl) {
