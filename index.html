@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bus Ticket Booking</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <!DOCTYPE html>
@@ -49,7 +51,7 @@
         </div>
 
     <script>
-       const fares = {
+        const fares = {
     "Sreekandapuram-Parippayi": 10,
     "Sreekandapuram-Neduvaloor": 15,
     "Parippayi-Neduvaloor": 5,
@@ -71,27 +73,34 @@ function updateFare() {
         const route = `${startPoint}-${endPoint}`;
         const fare = fares[route] || 0;
         document.getElementById('fare').innerText = `Fare: ₹${fare}`;
-        updatePaymentLink(busSelection, fare, startPoint, endPoint);
+        updatePaymentLink(busSelection, fare);
     } else {
         document.getElementById('fare').innerText = 'Fare: ₹0';
         document.getElementById('payButton').style.display = 'none'; // Hide button if no valid fare
     }
 }
 
-function updatePaymentLink(busSelection, fare, startPoint, endPoint) {
+function updatePaymentLink(busSelection, fare) {
     const payButton = document.getElementById('payButton');
     let paymentUrl = '';
-    const currentTime = new Date().toISOString();
 
     if (busSelection === 'Muthappan') {
-        paymentUrl = `upi://pay?pa=shravannarayan48@okicici&pn=Shravan Narayan&am=${fare}&cu=INR&url=https://yourwebsite.com/ticket?bus=${encodeURIComponent(busSelection)}&fare=${encodeURIComponent(fare)}&start=${encodeURIComponent(startPoint)}&end=${encodeURIComponent(endPoint)}&time=${encodeURIComponent(currentTime)}`;
+        paymentUrl = `upi://pay?pa=shravannarayan48@okicici&pn=Shravan Narayan&am=${fare}&cu=INR`;
     } else if (busSelection === 'St. Jude') {
-        paymentUrl = `upi://pay?pa=shravannarayan702-1@okhdfcbank&pn=Shravan Narayan&am=${fare}&cu=INR&url=https://yourwebsite.com/ticket?bus=${encodeURIComponent(busSelection)}&fare=${encodeURIComponent(fare)}&start=${encodeURIComponent(startPoint)}&end=${encodeURIComponent(endPoint)}&time=${encodeURIComponent(currentTime)}`;
+        paymentUrl = `upi://pay?pa=shravannarayan702-1@okhdfcbank&pn=Shravan Narayan&am=${fare}&cu=INR`;
     }
 
     if (paymentUrl) {
         payButton.style.display = 'block'; // Show button if valid payment URL
-        payButton.setAttribute('onclick', `window.open('${paymentUrl}', '_blank')`);
+        payButton.onclick = function () {
+            Swal.fire({
+                title: `Happy Journey with ${busSelection}!`,
+                text: `Click the link to pay ₹${fare}`,
+                icon: 'success',
+                html: `<a href="${paymentUrl}" target="_blank">Pay ₹${fare} via UPI</a>`,
+                confirmButtonText: 'Okay'
+            });
+        };
     } else {
         payButton.style.display = 'none'; // Hide button if no valid bus selected
     }
