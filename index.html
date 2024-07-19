@@ -7,49 +7,248 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
 </head>
 <body>
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Bus Ticket Booking</title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
+
+    <div id="loader-container">
+
+        <div class="loader" id="loader" >
+            <svg class="car" width="202" height="90" xmlns="http://www.w3.org/2000/svg" >
+                <g transform="translate(2 1)" stroke="#002742" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" >
+                    <image href="Untitled design.png" />
+                    <!-- <ellipse class="car__wheel--left" stroke-width="3.2" fill="#FFF" cx="83.493" cy="30.25" rx="6.922" ry="6.808"/>
+                    <ellipse class="car__wheel--right" stroke-width="3.2" fill="#FFF" cx="46.511" cy="30.25" rx="6.922" ry="6.808"/> -->
+                    <path class="car__line car__line--top" d="M22.5 16.5H2.475" stroke-width="3"/>
+                    <path class="car__line car__line--middle" d="M20.5 23.5H.4755" stroke-width="3"/>
+                    <path class="car__line car__line--bottom" d="M25.5 9.5h-19" stroke-width="3"/>
+                </g>
+            </svg>
+            
+                
+            </div>
+    </div>
+    <div id="content">
+
+
+
+
+        <script>
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    const loaderContainer = document.getElementById('loader');
+                    if (loaderContainer) {
+                        loaderContainer.classList.add('hiddenn');
+                    }
+                }, 800); // 1 second delay
+            });
+        </script>
+             <script>
+                window.addEventListener('load', () => {
+                    setTimeout(() => {
+                        const loaderContainer = document.getElementById('loader');
+                        if (loaderContainer) {
+                            loaderContainer.classList.add('go');
+                        }
+                    }, 1000); // 1 second delay
+                });
+            </script>
+
+
+          <script>
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    const loaderContainer = document.getElementById('loader-container');
+                    if (loaderContainer) {
+                        loaderContainer.classList.add('hidden');
+                    }
+                }, 1000); // 1 second delay
+            });
+        </script>       
+   
+        
+
+
+        
+
+
+<style>
+    image {
+        width: 180px;
+        margin-left: 10px;
+    }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+#loader {
+    
+}
+#loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: width 1s ease, opacity 1s ease; /* Ensure width and opacity transitions */
+}
+
+.hidden {
+    width: 0;
+    opacity: 0;
+    overflow: hidden; /* Hide content overflow during transition */
+}
+
+#content {
+    opacity: 1;
+    transition: opacity 1s ease; /* Ensure content fades in after loader */
+}
+.hiddenn {
+    margin-right: 40px;
+    transition: 0.2s ease-out;
+}
+.go {
+   margin-left: 100%;
+   transition: 1s ease-out;
+}
+
+</style>
+
+
+
+
+
+
+        <style>
+
+
+
+
+
+
+
+
+            .loader {
+	height: 100vh;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.car__body {
+	animation: shake 0.2s ease-in-out infinite alternate;
+}
+
+.car__line {
+	transform-origin: center right;
+	stroke-dasharray: 22;
+	animation: line 0.8s ease-in-out infinite;
+	animation-fill-mode: both;
+}
+
+.car__line--top {
+	animation-delay: 0s;
+}
+
+.car__line--middle {
+	animation-delay: 0.2s;
+}
+
+.car__line--bottom {
+	animation-delay: 0.4s;
+}
+
+@keyframes shake {
+	0% {
+		transform: translateY(-1%);
+	}
+	100% {
+		transform: translateY(3%);
+	}
+}
+
+@keyframes line {
+	0% {
+		stroke-dashoffset: 22;
+	}
+	25% {
+		stroke-dashoffset: 22;
+	}
+	50% {
+		stroke-dashoffset: 0;
+	}
+	51% {
+		stroke-dashoffset: 0;
+	}
+	80% {
+		stroke-dashoffset: -22;
+	}
+	100% {
+		stroke-dashoffset: -22;
+	}
+}
+
+        </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="background">
         <div class="container">
             <h1>Bus Ticket Booking</h1>
             <form id="bookingForm">
                 <label for="busSelection">Select Bus:</label>
-                <select id="busSelection" required>
+                <select id="busSelection" class="styled-select" required>
                     <option value="">Select Bus</option>
                     <option value="Muthappan">Muthappan</option>
                     <option value="St. Jude">St. Jude</option>
                 </select>
-    
+
                 <label for="startPoint">Start Point:</label>
-                <select id="startPoint" required>
+                <select id="startPoint" class="styled-select" required>
                     <option value="">Select Start Point</option>
                     <option value="Sreekandapuram">Sreekandapuram</option>
                     <option value="Parippayi">Parippayi</option>
                     <option value="Neduvaloor">Neduvaloor</option>
                 </select>
-    
+
                 <label for="endPoint">End Point:</label>
-                <select id="endPoint" required>
+                <select id="endPoint" class="styled-select" required>
                     <option value="">Select End Point</option>
                     <option value="Sreekandapuram">Sreekandapuram</option>
                     <option value="Parippayi">Parippayi</option>
                     <option value="Neduvaloor">Neduvaloor</option>
                 </select>
-    
+
                 <h1 id="fare">Fare: ₹0</h1>
-    
+
                 <button type="button" id="payButton">Pay Fare</button>
             </form>
         </div>
-
+    </div>
+</div>
     <script>
      const fares = {
     "Sreekandapuram-Parippayi": 10,
